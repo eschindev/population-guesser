@@ -8,16 +8,23 @@ var score;
 
 var cityNameHtml = $('<h3>');
 var cityNameArea = $('#city-name');
-var playerInput = $('#player-input');
+var playerInput = $('#user-input');
+var postGameModal = $('#post-game-modal');
 
-playerInput.on('submit', submitGuess);
+// var submitGuess = function(event) {
+// 	event.preventDefault();
 
-var submitGuess = function(event) {
-	event.preventDefault();
+// 	playerGuess = parseInt($('#user-guess').val());
+// 	if (isNaN(playerGuess)) {
+// 		window.alert("Please enter a number.");
+// 		return;
+// 	} else if (playerGuess <= 0){
+// 		window.alert("Please enter a positive integer.");
+// 		return;
+// 	}
+// 	game.checkGuess(playerGuess);
+// }
 
-	playerGuess = $('#user-guess').val();
-	game.checkGuess(playerGuess);
-}
 
 
 var randomCityNum = Math.floor(Math.random() * 602086);
@@ -34,25 +41,26 @@ const options = {
 var game = {
     startGame: function() {
         fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=1&offset=${randomCityNum}`, options)
-	.then(response => response.json())
-	.then(response => {
-        console.log(response);
+			.then(response => response.json())
+			.then(response => {
+				console.log(response);
 
-        cityName = response.data[0].city;
-        cityLat = response.data[0].latitude;
-		cityLon = response.data[0].longitude;
-        cityPop = response.data[0].population;
-        cityNameHtml.text(cityName);
-        cityNameArea.append(cityNameHtml);
+				cityName = response.data[0].city;
+				cityLat = response.data[0].latitude;
+				cityLon = response.data[0].longitude;
+				cityPop = response.data[0].population;
+				cityNameHtml.text(cityName);
+				cityNameArea.append(cityNameHtml);
 
+				var map = L.map('map').setView([cityLat, cityLon], 15);
 
-		var map = L.map('map').setView([cityLat, cityLon], 15);
-		L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-          attribution: 'Data <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, '
-          + 'Map tiles &copy; <a href="https://carto.com/attribution">CARTO</a>'
-        }).addTo(map);
-		var marker = L.marker([cityLat, cityLon]);
-		marker.addTo(map);
+				L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+				attribution: 'Data <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, '
+				+ 'Map tiles &copy; <a href="https://carto.com/attribution">CARTO</a>'
+				}).addTo(map);
+
+				var marker = L.marker([cityLat, cityLon]);
+				marker.addTo(map);
 
 		// var mapRequestUrl = `https://api.opencagedata.com/geocode/v1/json?q=${cityLat}+${cityLon}&key=${OpenCageApi}&pretty=1`;
 		// fetch(mapRequestUrl)
@@ -63,16 +71,31 @@ var game = {
     })
 	.catch(err => console.error(err));
     },
-	checkGuess: function(guess) {
+	submitGuess: function(event) {
+		event.preventDefault();
+	
+		playerGuess = parseInt($('#user-guess').val());
+		if (isNaN(playerGuess)) {
+			window.alert("Please enter a number.");
+			return;
+		} else if (playerGuess <= 0){
+			window.alert("Please enter a positive integer.");
+			return;
+		}
+		game.calculateScore(playerGuess);
+	},
+	calculateScore: function(guess) {
 		if (cityPop / guess < 1) {
 			score = Math.round((1 - (cityPop / guess)) * 100);
 		} else {
 			score = Math.round((1 - (guess / cityPop)) * 100);
 		}
+		postGameModal.addClass('is-active');
+		$('#post-game-modal-body').html(`<p>You guessed ${playerGuess}, and the actual population of ${cityName} is ${cityPop}, so your score for this round is ${score}.</p>`)
 	}
 }
 
-
+playerInput.on('submit', game.submitGuess);
 game.startGame();
 
 
