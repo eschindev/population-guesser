@@ -1,3 +1,11 @@
+var cityName;
+var cityNameHtml = $("<h3>");
+var cityNameArea = $('#city-name');
+var cityLat;
+var cityLon;
+// var OpenCageApi = "d05c7ded07e944bca02c922313d20342";
+
+
 var randomCityNum = Math.floor(Math.random() * 602086);
 console.log(randomCityNum);
 const options = {
@@ -8,14 +16,15 @@ const options = {
 	}
 };
 
-var cityLat;
-var cityLon;
+
 
 fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=1&offset=${randomCityNum}`, options)
 	.then(response => response.json())
 	.then(response => {
         console.log(response);
-        var cityName = response.data[0].city;
+        cityName = response.data[0].city;
+        cityNameHtml.text(cityName);
+        cityNameArea.append(cityNameHtml);
         console.log(cityName);
 		cityLat = response.data[0].latitude;
 		cityLon = response.data[0].longitude;
@@ -28,12 +37,11 @@ fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=1&offset=${randomCi
 		var marker = L.marker([cityLat, cityLon]);
 		marker.addTo(map);
 
-		var OpenCageApi = "d05c7ded07e944bca02c922313d20342";
-		var mapRequestUrl = `https://api.opencagedata.com/geocode/v1/json?q=${cityLat}+${cityLon}&key=${OpenCageApi}&pretty=1`;
-		fetch(mapRequestUrl)
-			.then(response=>response.json())
-			.then(response => {
-        		console.log(response);})
+		// var mapRequestUrl = `https://api.opencagedata.com/geocode/v1/json?q=${cityLat}+${cityLon}&key=${OpenCageApi}&pretty=1`;
+		// fetch(mapRequestUrl)
+		// 	.then(response=>response.json())
+		// 	.then(response => {
+        // 		console.log(response);})
 
     })
 	.catch(err => console.error(err));
