@@ -47,15 +47,20 @@ document.addEventListener('DOMContentLoaded', () => {
     openScore.addEventListener("click", function(){
       openModal(document.getElementById("high-scores-modal"))
     });
+
+    var openTutorial = document.getElementById("tutorial-btn");
+
+    openTutorial.addEventListener("click", function(){
+      openModal(document.getElementById("tutorial-modal"))
+    });
+
+
   });
 
  
 
- /*  var openTutorial = document.getElementById("tutorial-btn");
-  openTutorial.addEventListener("click", function(){
-    openTutorial(codument.getElementById("tutorial-modal"))
-  });
-
+ 
+/*
   var openSubmit = document.getElementById("submit-btn");
   openSubmit.addEventListener("click", function(){
     openModal(document.getElementById("post-game-modal"))
