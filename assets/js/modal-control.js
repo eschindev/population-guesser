@@ -54,14 +54,14 @@ document.addEventListener('DOMContentLoaded', () => {
       openModal(document.getElementById("tutorial-modal"))
     });
 
+    var openSubmit = document.getElementById("submit-btn");
+
+    openSubmit.addEventListener("click", function(){
+      openModal(document.getElementById("post-game-modal"))
+    });
 
   });
 
  
 
  
-/*
-  var openSubmit = document.getElementById("submit-btn");
-  openSubmit.addEventListener("click", function(){
-    openModal(document.getElementById("post-game-modal"))
-  }); */
