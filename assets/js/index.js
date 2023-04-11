@@ -8,11 +8,28 @@ const options = {
 	}
 };
 
+var cityLat;
+var cityLon;
+
 fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=1&offset=${randomCityNum}`, options)
 	.then(response => response.json())
 	.then(response => {
         console.log(response);
         var cityName = response.data[0].city;
         console.log(cityName);
+		cityLat = response.data[0].latitude;
+		cityLon = response.data[0].longitude;
+		var OpenCageApi = "d05c7ded07e944bca02c922313d20342";
+		var mapRequestUrl = `https://api.opencagedata.com/geocode/v1/json?q=${cityLat}+${cityLon}&key=${OpenCageApi}&pretty=1`;
+		fetch(mapRequestUrl)
+			.then(response=>response.json())
+			.then(response => {
+        		console.log(response);})
+
     })
 	.catch(err => console.error(err));
+
+	
+	
+	
+	
