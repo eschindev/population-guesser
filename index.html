@@ -17,14 +17,22 @@
     </head>
 
     <body>
-        <header id="" class="">
-            <img id="logo" src="./assets/images/popGuessLogo.png"></img>
-            <h1 id="title">Populus Pursuit</h1>
-            <button class="score-btn">High Scores</button>
-            <button id="tutorial-btn">Tutorial</button>
-        </header>
 
-        <div id="map-area">
+        <header id="header" class=" columns is-fullwidth mb-3 has-background-primary has-background-opacity-75 is-align-content-center ">
+            <img id="logo" class="" src="./assets/images/popGuessLogo.png"></img>
+            <div class="hero  is flex is-justify-content-center is-align-items-center"id="text-box">
+              <div class="has-text-centered">
+            <h1 class="is-size-1 is-uppercase has-text-centered mb-3" id="title">Populus Pursuit</h1>
+            </div>
+          </div>
+            <!-- <div class="column is-justify-content-right ml-6"> -->
+            <button id="score-btn" class="score-btn button is-large is-fullwidth is-rounded">High Scores</button>
+            <button id="tutorial-btn">Tutorial</button>
+          <!-- </div> -->
+        
+          </header>
+
+        <div class="container is-align-content-center id="map-area">
           <div id="map">
 
           </div>
@@ -37,8 +45,12 @@
 
         <div id="user-input">
             <form>
+              <div class="column">
                 <input type="text" id="user-guess">
+                </div>
+                <div class="column">
                 <input type="submit" id="submit-btn">
+                </div>
             </form>
         </div>
 
