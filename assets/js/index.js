@@ -5,13 +5,16 @@ var cityPop;
 var playerGuess;
 var score;
 // var OpenCageApi = "d05c7ded07e944bca02c922313d20342";
+var weatherApiKey = "7979d5e84fdccdb02368a469751192e0";
 
 var cityNameHtml = $('<h3>');
 var cityNameArea = $('#city-name');
 var playerInput = $('#user-input');
 var postGameModal = $('#post-game-modal');   
 var badInputModal = $('#bad-input-modal');
-var playAgainBtn = $('.play-again-btn')
+var playAgainBtn = $('.play-again-btn');
+var hsTable = document.getElementById('hs-table');
+
 
 
 
@@ -30,33 +33,28 @@ const options = {
 var game = {
     startGame: function() {
         fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=1&offset=${randomCityNum}`, options)
-			.then(response => response.json())
-			.then(response => {
-				console.log(response);
+			      .then(response => response.json())
+			      .then(response => {
+                console.log(response);
 
-				cityName = response.data[0].city;
-				cityLat = response.data[0].latitude;
-				cityLon = response.data[0].longitude;
-				cityPop = response.data[0].population;
-				cityNameHtml.text(cityName);
-				cityNameArea.append(cityNameHtml);
+                cityName = response.data[0].city;
+                cityLat = response.data[0].latitude;
+                cityLon = response.data[0].longitude;
+                cityPop = response.data[0].population;
+                cityNameHtml.text(cityName);
+                cityNameArea.append(cityNameHtml);
 
-				var map = L.map('map').setView([cityLat, cityLon], 15);
+                var map = L.map('map').setView([cityLat, cityLon], 15);
 
-				L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-				attribution: 'Data <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, '
-				+ 'Map tiles &copy; <a href="https://carto.com/attribution">CARTO</a>'
-				}).addTo(map);
+                L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+                attribution: 'Data <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, '
+                + 'Map tiles &copy; <a href="https://carto.com/attribution">CARTO</a>'
+                }).addTo(map);
 
-				var marker = L.marker([cityLat, cityLon]);
-				marker.addTo(map);
-
-        
-
-
-
+                var marker = L.marker([cityLat, cityLon]);
+                marker.addTo(map);
     })
-	.catch(err => console.error(err));
+	          .catch(err => console.error(err));
     },
 	submitGuess: function(event) {
 		event.preventDefault();
@@ -74,16 +72,18 @@ var game = {
 		} else {
 			score = Math.round((1 - (guess / cityPop)) * 100);
 		}
+
+    localStorage.setItem("pop-"+Date.now().toString(), score);
+
 		postGameModal.addClass('is-active');
 		$('#post-game-modal-body').html(`<p>You guessed ${playerGuess}, and the actual population of ${cityName} is ${cityPop}, so your score for this round is ${score}.</p>`);
 
-    var apiKey = "7979d5e84fdccdb02368a469751192e0";
-        var convertUrl =`https://api.openweathermap.org/data/2.5/weather?lat=${cityLat}&lon=${cityLon}&appid=${apiKey}`;
-        fetch(convertUrl)
+    var convertUrl =`https://api.openweathermap.org/data/2.5/weather?lat=${cityLat}&lon=${cityLon}&units=imperial&appid=${weatherApiKey}`;
+    fetch(convertUrl)
         .then(response =>response.json())
         .then(data => {
-          var currentDayHeader = $("<h2>").text(`${cityName} on ${dayjs().format("M/D/YYYY")}`);
-          var postGameBody =$('#post-game-modal-body');
+            var currentDayHeader = $("<h2>").text(`${cityName} on ${dayjs().format("M/D/YYYY")}`);
+            var postGameBody =$('#post-game-modal-body');
             postGameBody.append(currentDayHeader);
             var iconCode = data.weather[0].icon;
             var icon = $("<img>").attr("src", `https://openweathermap.org/img/w/${iconCode}.png`);
@@ -93,7 +93,6 @@ var game = {
             var currentHum = $("<p>").text(`Humidity: ${data.main.humidity}%`);
             postGameBody.append(currentTemp, currentWind, currentHum);
         })
-
 	},
 	playAgain: function() {
 		location.reload();
@@ -153,7 +152,31 @@ document.addEventListener('DOMContentLoaded', () => {
     var openScore = $(".score-btn");
 
     openScore.on("click", function(){
-      openModal(document.getElementById("high-scores-modal"))
+      openModal(document.getElementById("high-scores-modal"));
+
+      var highScoresArr = [];
+      for (i = 0; i < localStorage.length; i++) {
+          var key = localStorage.key(i);
+          var value = localStorage.getItem(key);
+          if(key.substring(0, 3) === 'pop') {
+            highScoresArr.push(value);
+          }
+      }
+      highScoresArr.sort(function(a, b) {
+          return a - b;
+      });
+      for (i = hsTable.rows.length - 1; i > 0; i--) {
+          hsTable.deleteRow(i);
+      }
+      for (let i = 0; i < highScoresArr.length; i++) {
+          var row = document.createElement('tr');
+          var scoreCell = document.createElement('td');
+          console.log(highScoresArr);
+          scoreCell.textContent = highScoresArr[i];
+        
+          row.appendChild(scoreCell);
+          hsTable.appendChild(row);
+      }
     });
 
     var openTutorial = document.getElementById("tutorial-btn");
