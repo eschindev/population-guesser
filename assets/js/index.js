@@ -9,8 +9,10 @@ var score;
 var cityNameHtml = $('<h3>');
 var cityNameArea = $('#city-name');
 var playerInput = $('#user-input');
-var postGameModal = $('#post-game-modal');
+var postGameModal = $('#post-game-modal');   
 var badInputModal = $('#bad-input-modal');
+var playAgainBtn = $('.play-again-btn')
+
 
 // var submitGuess = function(event) {
 // 	event.preventDefault();
@@ -90,9 +92,14 @@ var game = {
 		}
 		postGameModal.addClass('is-active');
 		$('#post-game-modal-body').html(`<p>You guessed ${playerGuess}, and the actual population of ${cityName} is ${cityPop}, so your score for this round is ${score}.</p>`)
+	},
+	playAgain: function() {
+		location.reload();
+		return;
 	}
 }
 
+playAgainBtn.on('click', game.playAgain);
 playerInput.on('submit', game.submitGuess);
 game.startGame();
 
