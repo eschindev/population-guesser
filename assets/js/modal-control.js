@@ -56,9 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     var openSubmit = document.getElementById("submit-btn");
 
-    openSubmit.addEventListener("click", function(){
-      openModal(document.getElementById("post-game-modal"))
-    });
+    // openSubmit.addEventListener("click", function(){
+    //   openModal(document.getElementById("post-game-modal"))
+    // });
 
   });
 
