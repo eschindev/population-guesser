@@ -4,7 +4,7 @@ var cityLon;
 var cityPop;
 var playerGuess;
 var score;
-// var OpenCageApi = "d05c7ded07e944bca02c922313d20342";
+
 var weatherApiKey = "7979d5e84fdccdb02368a469751192e0";
 
 var cityNameHtml = $('<h3>');
@@ -29,7 +29,7 @@ const options = {
 	}
 };
 
-// object to contain all functions related to the game
+
 var game = {
     startGame: function() {
         fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=1&offset=${randomCityNum}`, options)
@@ -53,7 +53,7 @@ var game = {
 
                 var marker = L.marker([cityLat, cityLon]);
                 marker.addTo(map);
-    })
+            })
 	          .catch(err => console.error(err));
     },
 	submitGuess: function(event) {
@@ -184,11 +184,4 @@ document.addEventListener('DOMContentLoaded', () => {
     openTutorial.addEventListener("click", function(){
       openModal(document.getElementById("tutorial-modal"))
     });
-
-    var openSubmit = document.getElementById("submit-btn");
-
-    // openSubmit.addEventListener("click", function(){
-    //   openModal(document.getElementById("post-game-modal"))
-    // });
-
   });

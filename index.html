@@ -11,9 +11,8 @@
             integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
             crossorigin="anonymous"></script>
         <script rel="script" src="./assets/js/leaflet-src.js" defer></script>
-        <!-- <script rel="script" src="./assets/js/modal-control.js" defer></script> -->
         <script rel="script" src="./assets/js/index.js" defer></script>
-        <title>Populus Pursuit</title>
+        <title>Pop Pursuit</title>
     </head>
 
     <body>
@@ -22,34 +21,27 @@
             <img id="logo" class="navbar-brand" src="./assets/images/popGuessLogo.png"></img>
             <div class="hero  is flex is-justify-content-center is-align-items-center"id="text-box">
               <div class="has-text-centered">
-            <h1 class="is-size-1 is-uppercase has-text-centered mb-3" id="title">Populus Pursuit</h1>
-            </div>
-          </div>
-            <!-- <div class="column is-justify-content-right ml-6"> -->
-            <div class="navbar-end">
-              <div class="field is-grouped">
-                <button id="score-btn" class="score-btn button is-rounded ">High Scores</button>
-                <button id="tutorial-btn" class="button is-rounded ">Tutorial</button>
+                <h1 class="is-size-1 is-uppercase has-text-centered mb-3" id="title">Pop Pursuit</h1>
               </div>
             </div>
-          <!-- </div> -->
-        
-          </header>
+            <div class="navbar-end">
+              <div class="field is-grouped">
+                <button id="score-btn" class="score-btn button is-rounded ">Top Scores</button>
+                <button id="tutorial-btn" class="button is-rounded ">Tutorial</button>
+              </div>
+            </div>        
+        </header>
 
         <div class="container is-align-content-center" id="map-area">
           <div id="map">
-
           </div>
-
         </div>
 
         <div id="city-name" class="is-centered has-text-centered has-text-weight-bold has-text-white">
-
         </div>
 
         <div id="user-input" class="is-centered has-text-centered ">
             <form>
-              
               <div class="column is-offset-one-third is-one-third">
                 <input type="text" id="user-guess" placeholder="Guess the Population" class="input is-focused is-rounded is-primary has-text-centered">
                 </div>
@@ -99,11 +91,10 @@
                 <button class="delete" aria-label="close"></button>
               </header>
               <section class="modal-card-body has-text-centered" id="post-game-modal-body">
-                <!-- Content ... -->
               </section>
               <footer class="modal-card-foot">
                 <button class="button is-success play-again-btn">Play Again</button>
-                <button class="button score-btn">High Scores</button>
+                <button class="button score-btn">Top Scores</button>
               </footer>
             </div>
           </div>
@@ -112,7 +103,7 @@
             <div class="modal-background"></div>
             <div class="modal-card">
               <header class="modal-card-head">
-                <p class="modal-card-title">High Scores</p>
+                <p class="modal-card-title">Top Scores</p>
                 <button class="delete" aria-label="close"></button>
               </header>
               <section class="modal-card-body">
