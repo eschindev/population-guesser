@@ -15,10 +15,6 @@ var badInputModal = $('#bad-input-modal');
 var playAgainBtn = $('.play-again-btn');
 var hsTable = document.getElementById('hs-table');
 
-
-
-
-
 var randomCityNum = Math.floor(Math.random() * 602086);
 console.log(randomCityNum);
 const options = {
