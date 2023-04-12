@@ -11,7 +11,7 @@
             integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
             crossorigin="anonymous"></script>
         <script rel="script" src="./assets/js/leaflet-src.js" defer></script>
-        <script rel="script" src="./assets/js/modal-control.js" defer></script>
+        <!-- <script rel="script" src="./assets/js/modal-control.js" defer></script> -->
         <script rel="script" src="./assets/js/index.js" defer></script>
         <title>Populus Pursuit</title>
     </head>
@@ -20,7 +20,7 @@
         <header id="" class="">
             <img id="logo" src="./assets/images/popGuessLogo.png"></img>
             <h1 id="title">Populus Pursuit</h1>
-            <button id="score-btn">High Scores</button>
+            <button class="score-btn">High Scores</button>
             <button id="tutorial-btn">Tutorial</button>
         </header>
 
@@ -49,7 +49,9 @@
                 <p class="modal-card-title">How to Play</p>
                 <button class="delete" aria-label="close"></button>
               </header>
-              <!-- Any other Bulma elements you want -->
+              <section class="modal-card-body">
+                <p>You will be provided with the name and location of a city anywhere in the world. Input and submit a positive integer guess to test your knowledge of population distribution.</p>
+              </section>
             </div>
             <button class="modal-close is-large" aria-label="close"></button>
         </div>
@@ -68,6 +70,8 @@
               <footer class="modal-card-foot">
                 <button class="button">Close</button>
               </footer>
+            </div>
+        </div>
 
         <div class="modal" id="post-game-modal">
             <div class="modal-background"></div>
@@ -81,7 +85,7 @@
               </section>
               <footer class="modal-card-foot">
                 <button class="button is-success play-again-btn">Play Again</button>
-                <button class="button">High Scores</button>
+                <button class="button score-btn">High Scores</button>
               </footer>
             </div>
           </div>
