@@ -50,6 +50,11 @@ var game = {
 
 				var marker = L.marker([cityLat, cityLon]);
 				marker.addTo(map);
+
+        
+
+
+
     })
 	.catch(err => console.error(err));
     },
@@ -70,7 +75,25 @@ var game = {
 			score = Math.round((1 - (guess / cityPop)) * 100);
 		}
 		postGameModal.addClass('is-active');
-		$('#post-game-modal-body').html(`<p>You guessed ${playerGuess}, and the actual population of ${cityName} is ${cityPop}, so your score for this round is ${score}.</p>`)
+		$('#post-game-modal-body').html(`<p>You guessed ${playerGuess}, and the actual population of ${cityName} is ${cityPop}, so your score for this round is ${score}.</p>`);
+
+    var apiKey = "7979d5e84fdccdb02368a469751192e0";
+        var convertUrl =`https://api.openweathermap.org/data/2.5/weather?lat=${cityLat}&lon=${cityLon}&appid=${apiKey}`;
+        fetch(convertUrl)
+        .then(response =>response.json())
+        .then(data => {
+          var currentDayHeader = $("<h2>").text(`${cityName} on ${dayjs().format("M/D/YYYY")}`);
+          var postGameBody =$('#post-game-modal-body');
+            postGameBody.append(currentDayHeader);
+            var iconCode = data.weather[0].icon;
+            var icon = $("<img>").attr("src", `https://openweathermap.org/img/w/${iconCode}.png`);
+            postGameBody.append(icon);
+            var currentTemp = $("<p>").html(`Temp: ${data.main.temp}&deg;F`);
+            var currentWind = $("<p>").text(`Wind: ${data.wind.speed}mph`);
+            var currentHum = $("<p>").text(`Humidity: ${data.main.humidity}%`);
+            postGameBody.append(currentTemp, currentWind, currentHum);
+        })
+
 	},
 	playAgain: function() {
 		location.reload();
