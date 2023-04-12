@@ -68,6 +68,7 @@
               </header>
               <section class="modal-card-body">
                 <p>You will be provided with the name and location of a city anywhere in the world. Input and submit a positive integer guess to test your knowledge of population distribution.</p>
+                <p>Your score is a percentage proportion of your guess against the actual population, and lower is better. 100 is the worst.</p>
               </section>
             </div>
             <button class="modal-close is-large" aria-label="close"></button>
@@ -115,7 +116,11 @@
                 <button class="delete" aria-label="close"></button>
               </header>
               <section class="modal-card-body">
-                <!-- Content ... -->
+                <table id="hs-table" class="has-text-centered">
+                  <tr>
+                    <th>Score</th>
+                  </tr>
+                </table>
               </section>
               <footer class="modal-card-foot">
                 <button class="button is-success play-again-btn">Play Again</button>
