@@ -9,8 +9,10 @@ var score;
 var cityNameHtml = $('<h3>');
 var cityNameArea = $('#city-name');
 var playerInput = $('#user-input');
-var postGameModal = $('#post-game-modal');
+var postGameModal = $('#post-game-modal');   
+var badInputModal = $('#bad-input-modal');
 var playAgainBtn = $('.play-again-btn')
+
 
 // var submitGuess = function(event) {
 // 	event.preventDefault();
@@ -76,11 +78,8 @@ var game = {
 		event.preventDefault();
 	
 		playerGuess = parseInt($('#user-guess').val());
-		if (isNaN(playerGuess)) {
-			window.alert("Please enter a number.");
-			return;
-		} else if (playerGuess <= 0){
-			window.alert("Please enter a positive integer.");
+		if (isNaN(playerGuess) || playerGuess <= 0) {
+			badInputModal.addClass('is-active');
 			return;
 		}
 		game.calculateScore(playerGuess);
