@@ -15,7 +15,7 @@ var badInputModal = $('#bad-input-modal');
 var playAgainBtn = $('.play-again-btn');
 var hsTable = document.getElementById('hs-table');
 
-var randomCityNum = Math.floor(Math.random() * 602086);
+var randomCityNum = Math.floor(Math.random() * 602076);
 console.log(randomCityNum);
 const options = {
 	method: 'GET',
@@ -25,18 +25,30 @@ const options = {
 	}
 };
 
-
 var game = {
     startGame: function() {
-        fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=1&offset=${randomCityNum}`, options)
+        fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=10&offset=${randomCityNum}`, options)
 			      .then(response => response.json())
 			      .then(response => {
                 console.log(response);
+                cityPop = 0;
+                for (i = 0; i < 10; i++) {
+                  if (response.data[i].population !== 0) {
+                    cityName = response.data[i].city;
+                    cityLat = response.data[i].latitude;
+                    cityLon = response.data[i].longitude;
+                    cityPop = response.data[i].population;
+                    break;
+                  }
+                }
 
-                cityName = response.data[0].city;
-                cityLat = response.data[0].latitude;
-                cityLon = response.data[0].longitude;
-                cityPop = response.data[0].population;
+                if (cityPop === 0) {
+                  cityName = response.data[0].city;
+                  cityLat = response.data[0].latitude;
+                  cityLon = response.data[0].longitude;
+                  cityPop = Math.floor(Math.random() * 900) + 100; // generate a random fake population if none of the 10 returned have recorded population data, as the free tier of API would prevent retrying genuinely via multiple requests in quick succession
+                }
+
                 cityNameHtml.text(cityName);
                 cityNameArea.append(cityNameHtml);
 
