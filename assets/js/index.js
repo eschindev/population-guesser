@@ -15,6 +15,7 @@ var badInputModal = $('#bad-input-modal');
 var playAgainBtn = $('.play-again-btn');
 var hsTable = document.getElementById('hs-table');
 
+// generate random number to get city from list
 var randomCityNum = Math.floor(Math.random() * 602076);
 console.log(randomCityNum);
 const options = {
@@ -25,7 +26,9 @@ const options = {
 	}
 };
 
+// object to hold all game-related function
 var game = {
+  //the startGame function makes the API call to get city data, makes sure we have a non-zero population value, and renders the map
     startGame: function() {
         fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=10&offset=${randomCityNum}`, options)
 			      .then(response => response.json())
@@ -46,7 +49,9 @@ var game = {
                   cityName = response.data[0].city;
                   cityLat = response.data[0].latitude;
                   cityLon = response.data[0].longitude;
-                  cityPop = Math.floor(Math.random() * 900) + 100; // generate a random fake population if none of the 10 returned have recorded population data, as the free tier of API would prevent retrying genuinely via multiple requests in quick succession
+                  cityPop = Math.floor(Math.random() * 900) + 100; // generate a random fake population if none of the 10 
+                  // returned have recorded population data, as the free tier of API would prevent retrying genuinely 
+                  // via multiple requests in quick succession
                 }
 
                 cityNameHtml.text(cityName);
@@ -64,6 +69,7 @@ var game = {
             })
 	          .catch(err => console.error(err));
     },
+  // validate user input, and pop up badInputModal if bad input, otherwise, go on to calculate
 	submitGuess: function(event) {
 		event.preventDefault();
 	
@@ -74,6 +80,7 @@ var game = {
 		}
 		game.calculateScore(playerGuess);
 	},
+  // calculate score as percentage difference between guess and actual population
 	calculateScore: function(guess) {
 		if (cityPop / guess < 1) {
 			score = Math.round((1 - (cityPop / guess)) * 100);
@@ -85,7 +92,7 @@ var game = {
 
 		postGameModal.addClass('is-active');
 		$('#post-game-modal-body').html(`<p>You guessed ${playerGuess}, and the actual population of ${cityName} is ${cityPop}, so your score for this round is ${score}.</p>`);
-
+    // send request to openweathermap API to get current weather data for city
     var convertUrl =`https://api.openweathermap.org/data/2.5/weather?lat=${cityLat}&lon=${cityLon}&units=imperial&appid=${weatherApiKey}`;
     fetch(convertUrl)
         .then(response =>response.json())
@@ -102,6 +109,7 @@ var game = {
             postGameBody.append(currentTemp, currentWind, currentHum);
         })
 	},
+  // reload page to play again
 	playAgain: function() {
 		location.reload();
 		return;
@@ -112,7 +120,6 @@ playAgainBtn.on('click', game.playAgain);
 playerInput.on('submit', game.submitGuess);
 game.startGame();
 
-	
 document.addEventListener('DOMContentLoaded', () => {
     // Functions to open and close a modal
     function openModal($el) {
@@ -156,12 +163,12 @@ document.addEventListener('DOMContentLoaded', () => {
         closeAllModals();
       }
     });
-
+    // identify all buttons with class score-button
     var openScore = $(".score-btn");
-
+    // attach click listener to top score buttons and pull up the high scores modal
     openScore.on("click", function(){
       openModal(document.getElementById("high-scores-modal"));
-
+      // load top scores from localStorage
       var highScoresArr = [];
       for (i = 0; i < localStorage.length; i++) {
           var key = localStorage.key(i);
@@ -170,12 +177,15 @@ document.addEventListener('DOMContentLoaded', () => {
             highScoresArr.push(value);
           }
       }
+      // sort top scores, lowest first
       highScoresArr.sort(function(a, b) {
           return a - b;
       });
+      // clear out existing data from table
       for (i = hsTable.rows.length - 1; i > 0; i--) {
           hsTable.deleteRow(i);
       }
+      // add top scores loaded from localStorage to table
       for (let i = 0; i < highScoresArr.length; i++) {
           var row = document.createElement('tr');
           var scoreCell = document.createElement('td');

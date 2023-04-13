@@ -17,29 +17,29 @@
 
     <body>
 
-        <header id="header" class=" navbar is-primary">
+        <header id="header" class="navbar is-primary">
             <img id="logo" class="navbar-brand" src="./assets/images/popGuessLogo.png"></img>
-            <div class="hero  is flex is-justify-content-center is-align-items-center"id="text-box">
+            <div class="hero is-justify-content-center is-align-items-center"id="text-box">
               <div class="has-text-centered">
                 <h1 class="is-size-1 is-uppercase has-text-centered mb-3" id="title">Pop Pursuit</h1>
               </div>
             </div>
             <div class="navbar-end">
               <div class="field is-grouped">
-                <button id="score-btn" class="score-btn button is-rounded ">Top Scores</button>
+                <button id="score-btn" class="score-btn button is-rounded">Top Scores</button>
                 <button id="tutorial-btn" class="button is-rounded ">Tutorial</button>
               </div>
             </div>        
         </header>
-
+        <!-- area to render map -->
         <div class="container is-align-content-center" id="map-area">
           <div id="map">
           </div>
         </div>
-
+        <!-- area to display city name -->
         <div id="city-name" class="is-centered has-text-centered has-text-weight-bold has-text-white">
         </div>
-
+        <!-- area for form for user guess -->
         <div id="user-input" class="is-centered has-text-centered ">
             <form>
               <div class="column is-offset-one-third is-one-third">
@@ -50,7 +50,7 @@
                 </div>
             </form>
         </div>
-
+        <!-- tutorial modal -->
         <div class="modal" id="tutorial-modal">
             <div class="modal-background"></div>
             <div class="modal-card">
@@ -65,10 +65,9 @@
             </div>
             <button class="modal-close is-large" aria-label="close"></button>
         </div>
-
+        <!-- modal for if user guess fails validation -->
         <div class="modal" id="bad-input-modal">
             <div class="modal-background"></div>
-        feature/modal-over-alert
             <div class="modal-card">
               <header class="modal-card-head">
                 <p class="modal-card-title">Invalid Guess</p>
@@ -82,7 +81,7 @@
               </footer>
             </div>
         </div>
-
+        <!-- post-game modal -->
         <div class="modal" id="post-game-modal">
             <div class="modal-background"></div>
             <div class="modal-card">
@@ -91,14 +90,15 @@
                 <button class="delete" aria-label="close"></button>
               </header>
               <section class="modal-card-body has-text-centered" id="post-game-modal-body">
+                <!-- content generated dynamically by JS here -->
               </section>
               <footer class="modal-card-foot">
                 <button class="button is-success play-again-btn">Play Again</button>
                 <button class="button score-btn">Top Scores</button>
               </footer>
             </div>
-          </div>
-
+        </div>
+        <!-- modal to display top scores -->
         <div class="modal" id="high-scores-modal">
             <div class="modal-background"></div>
             <div class="modal-card">
