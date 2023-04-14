@@ -3,6 +3,9 @@
 ## Overview
 This webapp challenges users to guess the population of a random city from anywhere in the world. The user is given a score based on how close their guess is to the actual population. Top scores are saved in localStorage so users can see their progress and play as many times as they want.
 
+
+![GIF of Deployed Site](./assets/images/Poppursuit%20GIF.gif)
+
 The game can be played here: https://eschindev.github.io/population-guesser/
 
 ## How to Play
@@ -10,6 +13,11 @@ To play, simply load the page. Note the name of the city, examine the map to see
 
 ## Features
 This app uses the GeoDB API to source data for a random city, the Leaflet JavaScript library to render a map showing the location of that city, and the OpenWeatherMap API to source current weather data about the city, shown to the user after they submit their guess. 
+
+This app also features responsive UI based on viewport size.
+
+
+![GIF of responsive UI](./assets/images/Animated%20GIF.gif)
 
 ## Technologies Used
 - HTML
